@@ -1,6 +1,7 @@
+from app.models import Articles
 from flask import render_template,request,redirect,url_for
 from . import main
-from ..requests import get_news,get_articles,search_articles
+from ..requests import get_category, get_news,get_articles,search_articles
 # Views
 @main.route('/')
 def index():
@@ -23,7 +24,7 @@ def articles():
     '''
     View article page function that returns the news articles details page and its data
     '''
-    news = get_articles(articles)
+    news = get_articles(Articles)
     title = f'{news.title}'
     articles = Articles.get_articles(news.url)
     return render_template('articles.html',title = title,news = news,articles = articles)
@@ -66,8 +67,8 @@ def search(category_name):
     View function to display the search results
     '''
     category_list = category.split(" category_name")
-    category_format = "+".join(news_list)
-    searched_news = search_category(category_format)
+    category_format = "+".join(category_list)
+    searched_news = search.news(category_format)
     title = f'search results for {category_name}'
     return render_template('search.html',news = searched_news)
 

@@ -1,3 +1,4 @@
+from typing import Any
 import urllib.request,json
 from .models import News
 # Getting api key
@@ -8,6 +9,7 @@ def configure_request(app):
     global api_key,base_url
     api_key = app.config['NEWS_API_KEY']
     base_url = app.config['NEWS_API_BASE_URL']
+    
     
 def get_news(category):
     '''
@@ -43,18 +45,18 @@ def process_results(news_list):
             news_results.append(news_object)
     return news_results
 def get_articles(articles):
-    get_news_details_url = articlesbase_url.format(articles,api_key)
+    get_news_details_url = base_url.format(articles,api_key)
     with urllib.request.urlopen(get_news_details_url) as url:
         news_details_data = url.read()
         news_details_response = json.loads(news_details_data)
         news_object = None
         if news_details_response:
-            title = news_item.get('title')
-            image = news_item.get('urlToImage')
-            description = news_item.get('description')
-            date = news_item.get('publishedAt')
-            articles = news_item.get('url')
-            id = news_item.get('id')
+            title = news_details_response.get('title')
+            image = news_details_response.get('urlToImage')
+            description = news_details_response.get('description')
+            date = news_details_response.get('publishedAt')
+            articles = news_details_response.get('url')
+            id = news_details_response.get('id')
             news_object = News(title,id,image,description,date,articles)
     return news_object
 def get_category(category_name):
@@ -73,12 +75,12 @@ def search_articles(articles_name):
     search_articles_url = 'http://newsapi.org/v2/everything/search?q={}&apiKey=&query={}'.format(api_key,movie_name)
     with urllib.request.urlopen(search_articles_url) as url:
         search_articles_data = url.read()
-        search_articles_response = json.loads(search_aricles_data)
+        search_articles_response = json.loads(search_articles_data)
 
         search_articles_results = None
 
         if search_articles_response['results']:
-            search_articles_list = search_aricles_response['results']
+            search_articles_list = search_articles_response['results']
             search_articles_results = process_results(search_articles_list)
 
 
