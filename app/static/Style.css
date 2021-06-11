@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+
+body {
+    background-color: pink;
+    list-style: none;
+}
+h3{
+    /* font-family: 'Cedarville Cursive', cursive; */
+    /* font-family: 'Nerko One', cursive; */
+
+    font-family: 'Texturina', serif;
+    /* font-size: 50px; */
+}

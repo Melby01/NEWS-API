@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+    {% import 'macros.html' as macro%}
+    {% if title %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Welcome to the News website online</title>
+    {% endif %}
+</head>
+<body>
+    <!-- Styles block -->
+    {% block styles%}
+         {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='CSS/index.css')}}">
+    {% endblock %}
+    <!-- Content block -->
+    {% block content %}
+    <div class="container">
+        <form>
+            <input type="text" name="news_query" placeholder="Search for News" class="form_control">
+            <input type="submit" value="Submit" class="btn btn-default">
+        </form>
+   
+    <!-- Popular News -->
+    <h3 class= "text text-center" style="font-weight: bolder; font-size: 50px;"> Independent News</h3>
+    <hr>
+        {{ macro.displayNewsList(independent)}}
+    <!-- Upcoming News  -->
+    <h3 class= "text text-center" style="font-weight: bolder; font-size: 50px;"> Techcrunch News</h3>
+    <hr>
+        {{ macro.displayNewsList(techcrunch)}}
+    <!-- Now showing News -->
+    <h3 class = "text text-center" style="font-weight: bolder; font-size: 50px;">Focus News</h3>
+    <hr>
+        <br>{{ macro.displayNewsList(focus)}}
+        
+    {% endblock%}
+    </div>
+</body>
+</html>
